@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin"
+    tools:context=".EditActivity">
+
+    <!-- Overview category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            style="@style/CategoryStyle"
+            android:layout_weight="1"
+            android:text="Product Name *" />
+
+
+        <EditText
+            android:id="@+id/edit_name"
+            style="@style/EditorFieldStyle"
+            android:hint="Product "
+            android:inputType="textCapWords" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            style="@style/CategoryStyle"
+            android:layout_weight="1"
+            android:text="Price *" />
+
+
+        <EditText
+            android:id="@+id/price"
+            style="@style/EditorFieldStyle"
+            android:hint="Price "
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Label -->
+        <TextView
+            style="@style/CategoryStyle"
+            android:layout_weight="1"
+            android:text="Stock *" />
+
+
+        <EditText
+            android:id="@+id/stock"
+            style="@style/EditorFieldStyle"
+            android:hint="Stock "
+            android:inputType="number" />
+    </LinearLayout>
+<Button
+    android:text="Upload Image"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/RaisedButtonDark"/>
+</LinearLayout>
