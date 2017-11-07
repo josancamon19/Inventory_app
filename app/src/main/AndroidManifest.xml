@@ -19,15 +19,18 @@
         <activity
             android:name=".EditActivity"
             android:parentActivityName=".ProductsActivity">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProductsActivity" />
         </activity>
+
         <provider
             android:name=".data.ProductProvider"
             android:authorities="com.example.android.products"
             android:exported="false" />
+
     </application>
 
 </manifest>

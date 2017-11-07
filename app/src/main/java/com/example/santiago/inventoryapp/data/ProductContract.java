@@ -30,6 +30,7 @@ public final class ProductContract {
         public final static String COLUMN_PRODUCT_NAME = "name";
         public final static String COLUMN_PRODUCT_PRICE = "price";
         public final static String COLUMN_PRODUCT_STOCK = "stock";
+        public final static String COLUMN_IMAGE = "image";
 
 
     }

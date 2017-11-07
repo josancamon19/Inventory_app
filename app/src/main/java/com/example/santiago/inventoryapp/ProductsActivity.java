@@ -1,7 +1,9 @@
 package com.example.santiago.inventoryapp;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,12 +15,14 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.santiago.inventoryapp.data.ProductContract.ProductEntry;
 import com.example.santiago.inventoryapp.data.ProductDbHelper;
@@ -71,8 +75,41 @@ public class ProductsActivity extends AppCompatActivity implements LoaderManager
 
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
+    private void deleteAllProducts() {
+        int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+        if (rowsDeleted > 0) {
+            Toast.makeText(ProductsActivity.this, "Products Deleted",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ProductsActivity.this, "You dont have products to delete",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listenersasdasdasd
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure to delete all pets! ?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deleteAllProducts();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
 
-
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_catalog.xml file.
@@ -88,11 +125,11 @@ public class ProductsActivity extends AppCompatActivity implements LoaderManager
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.InsertDummyData:
                 insertProduct();
-                // Do nothing for now
                 return true;
-            // Respond to a click on the "Delete all entries" menu option
+
             case R.id.deleteAll:
-                // Do nothing for now
+
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
