@@ -89,6 +89,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         stockView.setOnTouchListener(mTouchListener);
 
     }
+
     private void buttonImageClick() {
         Intent intent = new Intent();
 
@@ -101,6 +102,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select picture"), PICK_IMAGE_REQUEST);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         // The ACTION_OPEN_DOCUMENT intent was sent with the request code READ_REQUEST_CODE.
@@ -119,6 +121,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         }
     }
+
     public Bitmap getBitmapFromUri(Uri uri) {
 
         if (uri == null || uri.toString().isEmpty())
@@ -263,8 +266,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             nameView.setText(name);
             priceView.setText(Integer.toString(price));
             stockView.setText(Integer.toString(stock));
-            Bitmap lipstickBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            mImageView.setImageBitmap(lipstickBitmap);
+            Bitmap productBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            mImageView.setImageBitmap(productBitmap);
         }
     }
 
@@ -376,7 +379,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         return true;
     }
-
 
 
     @Override
