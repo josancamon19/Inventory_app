@@ -77,6 +77,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:contentDescription="place holder image" />
+        android:contentDescription="place holder image"
+        tools:src="@drawable/ic_indeterminate_check_box"/>
 
 </LinearLayout>
