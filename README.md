@@ -30,8 +30,8 @@ Creating intents to other apps using stored information.
 ## Android Developer Nanodegree
 [![udacity][1]][2]
 
-[1]: ../master/images/logo.png
-[2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
+[1]: ../master/images/logo2.png
+[2]: https://www.udacity.com/course/android-developer-nanodegree--nd803
 
 ## License
 
