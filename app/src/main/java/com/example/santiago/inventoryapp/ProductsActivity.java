@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -26,6 +29,8 @@ import android.widget.Toast;
 
 import com.example.santiago.inventoryapp.data.ProductContract.ProductEntry;
 import com.example.santiago.inventoryapp.data.ProductDbHelper;
+
+import java.io.ByteArrayOutputStream;
 
 public class ProductsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -64,14 +69,27 @@ public class ProductsActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
     }
+    private byte[] convertToByte (Drawable imageFromFile) {
+        //Convert to bitmap
+        BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageFromFile);
+        Bitmap bitmap = bitmapDrawable .getBitmap();
+        //Convert to byte to store
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] imageByte = bos.toByteArray();
+        return imageByte;
+    }
 
     private void insertProduct() {
+        Drawable productImage = getDrawable(R.drawable.gaseosa);
+        byte[] image =convertToByte(productImage);
 
         // Create a ContentValues object where column names are the keys,
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Gaseosa");
-        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 1124);
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 2500);
         values.put(ProductEntry.COLUMN_PRODUCT_STOCK, 50 );
+        values.put(ProductEntry.COLUMN_IMAGE,image);
 
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }

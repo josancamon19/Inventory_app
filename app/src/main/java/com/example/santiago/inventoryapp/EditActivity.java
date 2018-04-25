@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.LoaderManager;
@@ -20,7 +19,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,7 +28,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.santiago.inventoryapp.data.ProductDbHelper;
 import com.example.santiago.inventoryapp.data.ProductContract.ProductEntry;
 
 import java.io.ByteArrayOutputStream;
@@ -83,7 +80,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             setTitle("Edit Product");
             getSupportLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
-
+        //sest the plus en minus button onclicklistener get the value of the textinput +1 and -1
         nameView.setOnTouchListener(mTouchListener);
         priceView.setOnTouchListener(mTouchListener);
         stockView.setOnTouchListener(mTouchListener);
@@ -162,14 +159,9 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    private void savePet() {
-        Drawable imageImage = mImageView.getDrawable();
-        BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageImage);
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        //Convert to byte to store
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-        byte[] imageByte = bos.toByteArray();
+    private void saveProduct() {
+
+
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String name = nameView.getText().toString().trim();
@@ -197,7 +189,18 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             stock = Integer.parseInt(stockString);
         }
         values.put(ProductEntry.COLUMN_PRODUCT_STOCK, stock);
-        values.put(ProductEntry.COLUMN_IMAGE, imageByte);
+        try {
+            Drawable imageImage = mImageView.getDrawable();
+            BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageImage);
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            //Convert to byte to store
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] imageByte = bos.toByteArray();
+            values.put(ProductEntry.COLUMN_IMAGE, imageByte);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),"Product requires a image",Toast.LENGTH_SHORT).show();
+        }
 
         // Insert a new row for pet in the database, returning the ID of that new row.
         if (currentUri == null) {
@@ -266,8 +269,12 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             nameView.setText(name);
             priceView.setText(Integer.toString(price));
             stockView.setText(Integer.toString(stock));
-            Bitmap productBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            mImageView.setImageBitmap(productBitmap);
+            if (image!=null) {
+                if (image.length > 0) {
+                    Bitmap productBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    mImageView.setImageBitmap(productBitmap);
+                }
+            }
         }
     }
 
@@ -287,10 +294,10 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             // content URI already identifies the pet that we want.
             int rowsDeleted = getContentResolver().delete(currentUri, null, null);
             if (rowsDeleted == 0) {
-                Toast.makeText(this, "Error with deleting pet",
+                Toast.makeText(this, "Error with deleting product",
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Pet Deleted",
+                Toast.makeText(this, "Product Deleted",
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -396,7 +403,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Do nothing for now
-                savePet();
+                saveProduct();
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option

@@ -87,19 +87,19 @@ public class ProductProvider extends ContentProvider {
         // Check that the name is not null
         String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
         if (name == null) {
-            throw new IllegalArgumentException("Pet requires a name");
+            throw new IllegalArgumentException("Product requires a name");
         }
 
         // Check that the gender is valid
         Integer price = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_PRICE);
         if (price == null && price < 0) {
-            throw new IllegalArgumentException("Pet requires valid gender");
+            throw new IllegalArgumentException("Product requires valid gender");
         }
 
         // If the weight is provided, check that it's greater than or equal to 0 kg
         Integer stock = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_STOCK);
         if (stock != null && stock < 0) {
-            throw new IllegalArgumentException("Pet requires valid weight");
+            throw new IllegalArgumentException("Product requires valid weight");
         }
 
         // Get database
