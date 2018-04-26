@@ -27,7 +27,7 @@ Creating intents to other apps using stored information.
 
 ![screen](../master/images/main-!empty.png)
    
-## Android Developer Nanodegree
+## Android Basics Nanodegree by Google
 [![udacity][1]][2]
 
 [1]: ../master/images/logo2.png
